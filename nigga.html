@@ -1,0 +1,40 @@
+# Webhook Deleter
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Deleter</title>
+</head>
+<body>
+    <h1>Webhook Deleter</h1>
+    <form id="deleteWebhookForm">
+        <label for="webhookUrl">Webhook URL:</label>
+        <input type="text" id="webhookUrl" name="webhookUrl" required>
+        <button type="submit">Delete Webhook</button>
+    </form>
+    <div id="responseMessage"></div>
+
+    <script>
+        document.getElementById('deleteWebhookForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const webhookUrl = document.getElementById('webhookUrl').value;
+
+            fetch(webhookUrl, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('responseMessage').innerText = 'Webhook deleted successfully.';
+                } else {
+                    document.getElementById('responseMessage').innerText = 'Failed to delete webhook.';
+                }
+            })
+            .catch(error => {
+                document.getElementById('responseMessage').innerText = 'Error: ' + error.message;
+            });
+        });
+    </script>
+</body>
+</html>
